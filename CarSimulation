@@ -1,0 +1,148 @@
+public class Carro {
+
+    //Atributos
+    private int velocidade;
+    private int marcha;
+    private boolean ligado;
+
+    //Construtor
+    public Carro(){
+        velocidade = 0;
+        marcha = 0;
+        ligado = false;
+    }
+
+    //Métodos
+    public void ligarCarro (){
+        setLigado(true);
+    }
+
+    public void desligarCarro (){
+        if (!verficacaoOnOff()){
+            return;
+        }
+        setLigado(false);
+    }
+
+    public void acelerar (){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        if (getVelocidade()>=120){
+            return;
+        }
+        if (getMarcha() == 0){
+            return;
+        }
+        switch (getMarcha()) {
+            case 1:
+                if (getVelocidade() >= 20) return;
+                break;
+            case 2:
+                if (getVelocidade() >= 40) return;
+                break;
+            case 3:
+                if (getVelocidade() >= 60) return;
+                break;
+            case 4:
+                if (getVelocidade() >= 80) return;
+                break;
+            case 5:
+                if (getVelocidade() >= 100) return;
+                break;
+            case 6:
+                break;
+                }
+        setVelocidade(getVelocidade() + 1);
+    }
+
+    public void diminuirVelocidade (){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        if (getVelocidade() <= 0){
+            return;
+        }
+        setVelocidade(getVelocidade() - 1);
+    }
+
+    public void virarEsquerda (){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        if (getVelocidade()>=1 && getVelocidade()<=40){
+            System.out.println("Virou a Esquerda");
+        }
+    }
+    public void virarDireita (){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        if (getVelocidade()>=1 && getVelocidade()<=40){
+            System.out.println("Virou a Direita");
+        }
+    }
+    public void verificarVelocidade (){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        System.out.println("Velocidade atual: "+ getVelocidade());
+    }
+    public void trocarMarcha (int marchaUsuario){
+        if (!podeExecutarAcoes()){
+            return;
+        }
+        if(marchaUsuario>6 || marchaUsuario<0){
+            return;
+        }
+        if (marchaUsuario == getMarcha()) {
+            return;
+        }
+        if (marchaUsuario != getMarcha() + 1 && marchaUsuario != getMarcha() - 1) {
+            return;
+        }
+        if(!velocidadeCompativelComMarcha(marchaUsuario)){
+            return;
+        }
+        setMarcha(marchaUsuario);
+    }
+
+    //métodos privados da classe
+    private boolean podeExecutarAcoes(){
+        return ligado;
+    }
+    private boolean verficacaoOnOff(){
+        return getMarcha() == 0 && getVelocidade() == 0;
+    }
+    private boolean velocidadeCompativelComMarcha(int marcha){
+        return switch (marcha) {
+            case 0 -> getVelocidade() == 0;
+            case 1 -> getVelocidade() >= 0 && getVelocidade() <= 20;
+            case 2 -> getVelocidade() >= 20 && getVelocidade() <= 40;
+            case 3 -> getVelocidade() >= 40 && getVelocidade() <= 60;
+            case 4 -> getVelocidade() >= 60 && getVelocidade() <= 80;
+            case 5 -> getVelocidade() >= 80 && getVelocidade() <= 100;
+            case 6 -> getVelocidade() >= 100 && getVelocidade() <= 120;
+            default -> false;
+        };
+    }
+
+    //Getters
+    private int getVelocidade() {
+        return velocidade;
+    }
+    private int getMarcha() {
+        return marcha;
+    }
+
+    //Setters
+    private void setMarcha(int marcha) {
+        this.marcha = marcha;
+    }
+    private void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
+    }
+    private void setLigado(boolean ligado){
+        this.ligado = ligado;
+    }
+}
